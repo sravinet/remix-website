@@ -11,16 +11,16 @@ const requiredInProduction: z.RefinementEffect<
   }
 };
 
-const requiredInDevelopment: z.RefinementEffect<
-  string | undefined
->["refinement"] = (value, ctx) => {
-  if (process.env.NODE_ENV === "development" && !value) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Missing required environment variable" + ctx.path.join("."),
-    });
-  }
-};
+// const requiredInDevelopment: z.RefinementEffect<
+//   string | undefined
+// >["refinement"] = (value, ctx) => {
+//   if (process.env.NODE_ENV === "development" && !value) {
+//     ctx.addIssue({
+//       code: z.ZodIssueCode.custom,
+//       message: "Missing required environment variable" + ctx.path.join("."),
+//     });
+//   }
+// };
 
 const envSchema = z.object({
   // Get from https://app.convertkit.com/account_settings/advanced_settings
@@ -36,10 +36,10 @@ const envSchema = z.object({
   RELEASE_PACKAGE: z.string(),
 
   // For development, reading the docs from a local repo
-  LOCAL_REPO_RELATIVE_PATH: z
-    .string()
-    .optional()
-    .superRefine(requiredInDevelopment),
+  // LOCAL_REPO_RELATIVE_PATH: z
+  //   .string()
+  //   .optional()
+  //   .superRefine(requiredInDevelopment),
 
   NO_CACHE: z.coerce.boolean().default(false),
 });
